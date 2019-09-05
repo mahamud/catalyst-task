@@ -23,6 +23,16 @@ function processArguments($arguments){
 
 
 /**
+ * @param DatabaseConnectionInterface $database
+ * @return DatabaseConnectionInterface
+ */
+function getDatabaseConnection(DatabaseConnectionInterface $database){
+    return $database;
+}
+
+
+
+/**
  * @param $message
  * @param bool $endScript
  */

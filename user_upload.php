@@ -2,6 +2,7 @@
 
 require_once ('config/config.php');
 require_once ('app/helper.php');
+require_once ('lib/database.php');
 
 echo 'Starting the Catalyst Task ... please wait ...'.PHP_EOL;
 sleep(2);
@@ -34,9 +35,8 @@ if (is_array($arguments)) {
     }
 }
 
-//var_dump(print_r($result), true);
 
-//Validate against valid argument keys
+$db = getDatabaseConnection(new PgSqlConnection());
 
 
 endScript();

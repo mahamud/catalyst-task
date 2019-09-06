@@ -1,7 +1,7 @@
 <?php
 
 /**
- *
+ * @return array
  */
 function processDataFile(){
     $output = array('clean' => array(), 'errors' => array());
@@ -34,7 +34,7 @@ function processDataFile(){
         }
         fclose($handle);
     }
-    var_dump(print_r($output, true));
+    return $output;
 }
 
 

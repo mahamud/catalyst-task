@@ -21,7 +21,13 @@ function processDataFile(){
             $record = sanitizeAndCleanRecord($record);
 
             //Validate for Business Rules
-
+            try {
+                validateBusinessRules($record);
+            }
+            catch (Exception $exception){
+                $output['errors'][] = 'Record number '.$row.' has error. '.$exception->getMessage();
+                $row++; continue;
+            }
 
             $output['clean'][] = $record;
             $row++;
@@ -52,4 +58,21 @@ function sanitizeAndCleanRecord($record){
         }
     }
     return $sanitizedRecord;
+}
+
+
+/**
+ * @param $record
+ * @throws Exception
+ */
+function validateBusinessRules($record){
+    foreach($record as $key => $value){
+        switch ($key) {
+            case 'email':
+                if (filter_var($value, FILTER_VALIDATE_EMAIL) != true) {
+                    throw new Exception('Invalid email address provided.');
+                }
+                break;
+        }
+    }
 }

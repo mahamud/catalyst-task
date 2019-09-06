@@ -8,10 +8,7 @@ require_once ('lib/database.php');
 echo 'Starting the Catalyst Task ... please wait ...'.PHP_EOL;
 sleep(2);
 
-echo 'Options passed are : '.PHP_EOL.PHP_EOL;
-
 $arguments = processArguments($argv);
-var_dump(print_r($arguments, true));
 validateArguments($arguments);
 
 $data = processDataFile(); //Initiate data file parsing

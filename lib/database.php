@@ -57,26 +57,6 @@ class PgSqlConnection implements DatabaseConnectionInterface {
         return $this->_connection;
     }
 
-    /**
-     * @param $sql
-     * @param string $id
-     * @return string
-     * @throws Exception
-     */
-    public function insert($sql, $id='id')
-    {
-        try {
-            $sql = rtrim($sql, ';');
-            $sql .= ' RETURNING ' . $id;
-            $result = pg_query($this->_connection, $sql);
-            if (pg_last_error()) exit(pg_last_error());
-            $this->lastID = pg_fetch_result($result, 0);
-            return $this->lastID;
-        }
-        catch(Exception $exception){
-            throw new Exception($exception->getMessage());
-        }
-    }
 
     /**
      * @param $sql

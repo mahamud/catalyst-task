@@ -49,35 +49,46 @@ class PgSqlConnection implements DatabaseConnectionInterface {
 
 
     /**
-     * Insert Method and returns last ID
      * @param $sql
      * @param string $id
      * @return string
+     * @throws Exception
      */
     public function insert($sql, $id='id')
     {
-        $sql = rtrim($sql, ';');
-        $sql .= ' RETURNING '.$id;
-        $result = pg_query($this->_connection, $sql);
-        if (pg_last_error()) exit(pg_last_error());
-        $this->lastID = pg_fetch_result($result, 0);
-        return $this->lastID;
+        try {
+            $sql = rtrim($sql, ';');
+            $sql .= ' RETURNING ' . $id;
+            $result = pg_query($this->_connection, $sql);
+            if (pg_last_error()) exit(pg_last_error());
+            $this->lastID = pg_fetch_result($result, 0);
+            return $this->lastID;
+        }
+        catch(Exception $exception){
+            throw new Exception($exception->getMessage());
+        }
     }
 
-
-    // SELECT Query
-    // Returns an array of row objects
-    // Gets number of rows
+    /**
+     * @param $sql
+     * @return array
+     * @throws Exception
+     */
     public function getRows($sql)
     {
-        $result = @pg_query($this->_connection, $sql);
-        if (pg_last_error()) exit(pg_last_error());
-        $this->numRows = pg_num_rows($result);
-        $rows = array();
-        while ($item = pg_fetch_object($result)) {
-            $rows[] = $item;
+        try {
+            $result = @pg_query($this->_connection, $sql);
+            if (pg_last_error()) exit(pg_last_error());
+            $this->numRows = pg_num_rows($result);
+            $rows = array();
+            while ($item = pg_fetch_object($result)) {
+                $rows[] = $item;
+            }
+            return $rows;
         }
-        return $rows;
+        catch(Exception $exception){
+            throw new Exception($exception->getMessage());
+        }
     }
 
 

@@ -14,8 +14,11 @@ function processDataFile(){
                 $row++; continue;
             }
 
-            //Validate the Record now
-            $record = sanitizeRecord($data);
+            //Sanitize the Record now
+            $record = sanitizeAndCleanRecord($data);
+
+            //Validate for Business Rules
+
             $output['clean'][] = $record;
             $row++;
         }
@@ -29,7 +32,7 @@ function processDataFile(){
  * @param $record
  * @return mixed
  */
-function sanitizeRecord($record){
+function sanitizeAndCleanRecord($record){
     $record[0] = ucfirst(strtolower(filter_var($record[0], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)));
     $record[1] = ucfirst(strtolower(filter_var($record[1], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)));
     $record[2] = strtolower(filter_var($record[2], FILTER_SANITIZE_EMAIL));

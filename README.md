@@ -9,7 +9,7 @@ The ideal environment to execute the script
 3. PostgreSQL 11.5(or above)
 
 
-#Command Options
+# Command Options
 `php user_upload.php`
 
 Running this command will execute the script over and over. Everytime the database table will be re-created and the data freshly inserted.

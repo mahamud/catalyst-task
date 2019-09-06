@@ -13,6 +13,9 @@ echo 'Options passed are : '.PHP_EOL.PHP_EOL;
 $arguments = processArguments($argv);
 var_dump(print_r($arguments, true));
 validateArguments($arguments);
+
+processDataFile(); //Initiate data file parsing
+
 $databaseParameters = getDatabaseParameters($arguments);
 var_dump(print_r($databaseParameters, true));
 

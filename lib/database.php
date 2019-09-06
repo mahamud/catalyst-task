@@ -2,7 +2,7 @@
 
 interface DatabaseConnectionInterface
 {
-    public function connect();
+    public function connect(array $parameters);
     public function execute($sql);
 }
 
@@ -11,7 +11,7 @@ interface DatabaseConnectionInterface
  */
 class MySqlConnection implements DatabaseConnectionInterface {
     //Implementation for a MySQL DB
-    public function connect() {}
+    public function connect(array $parameters) {}
     public function execute($sql) {}
 }
 
@@ -26,16 +26,18 @@ class PgSqlConnection implements DatabaseConnectionInterface {
     public  $affected_rows; //Affected rows
 
     /**
+     * @param array $parameters
      * @throws Exception
      */
-    public function connect() {
+    public function connect(array $parameters) {
         try {
-            $this->_connection = pg_connect('host=DB_HOST port=DB_PORT dbname=DB_NAME user=DB_USER password=DB_PASS');
+            $this->_connection = pg_connect();
         }
         catch(Exception $exception){
             throw new Exception($exception->getMessage());
         }
     }
+
 
     /**
      * @param $sql

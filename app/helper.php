@@ -23,13 +23,56 @@ function processArguments($arguments){
 
 
 /**
+ * @param array $arguments
+ * @return array
+ */
+function getDatabaseParameters(array $arguments){
+    $parameters = array(
+        'host' => !empty($arguments['h']) ? $arguments['h'] : DB_HOST,
+        'user' => !empty($arguments['u']) ? $arguments['u'] : DB_USER,
+        'password' => !empty($arguments['p']) ? $arguments['p'] : DB_PASS,
+        'port' => DB_PORT,
+        'dbname' => DB_NAME
+    );
+    return $parameters;
+}
+
+
+/**
+ * @param $arguments
+ */
+function validateArguments($arguments){
+    // Validate arguments and display error message accordingly
+    if (is_array($arguments)) {
+        if (sizeof($arguments) > ARGUMENT_SIZE) {
+            displayErrorMessage("Error: Invalid number of arguments passed. Execute php user_upload --help for details.", true);
+        }else{
+            //Get all argument keys
+            $argumentArrayKeys = array_keys($arguments);
+            $result = array_diff($argumentArrayKeys, ARGUMENTKEYS); //Validate against valid argument keys
+            if(is_array($result) == false || sizeof($result) > 0){
+                displayErrorMessage("Error: Invalid argument key passed. Execute php user_upload --help for details.", true);
+            }
+
+            //Validate against dry_run and file combination
+            if(in_array('dry_run', $argumentArrayKeys) && in_array('file', $argumentArrayKeys) == false){
+                if(empty($argumentArrayKeys['file'])){
+                    displayErrorMessage("Error: Dry runs can only be initiated when a file name is provided. Please provide a file name.", true);
+                }
+            }
+
+        }
+    }
+}
+
+
+/**
  * @param DatabaseConnectionInterface $database
  * @return DatabaseConnectionInterface
  */
 function getDatabaseConnection(DatabaseConnectionInterface $database){
     return $database;
 }
-
 
 
 /**
@@ -49,6 +92,6 @@ function displayErrorMessage($message, $endScript = false){
  * Method that Ends the Script
  */
 function endScript(){
-    echo PHP_EOL.'Thanks for you time.'.PHP_EOL;
+    echo PHP_EOL.'Thanks for running the script.'.PHP_EOL;
     exit;
 }

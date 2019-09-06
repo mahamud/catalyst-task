@@ -10,7 +10,7 @@ sleep(2);
 
 $arguments = processArguments($argv);
 validateArguments($arguments);
-var_dump($arguments);
+
 $data = processDataFile(); //Initiate data file parsing
 $data['clean'] = removeDuplicateValuesFromArray($data['clean'], 'email');
 

@@ -15,8 +15,7 @@ var_dump(print_r($arguments, true));
 validateArguments($arguments);
 
 $data = processDataFile(); //Initiate data file parsing
-
-var_dump(print_r($data, true));
+$data['clean'] = removeDuplicateValuesFromArray($data['clean'], 'email');
 
 $databaseParameters = getDatabaseParameters($arguments);
 var_dump(print_r($databaseParameters, true));
@@ -47,9 +46,13 @@ if(doesTableExist($db, 'users') == false){
 }
 
 //Create the SQL for the clean data obtained. The system will be doing bulk insert rather than row by row.
-
-
-
+try {
+    addDataToDatabase($db, $data['clean']);
+}
+catch(Exception $exception){
+    echo $exception->getMessage().PHP_EOL;
+    endScript();
+}
 // End the Execution here if not stopped before.
 endScript();
 

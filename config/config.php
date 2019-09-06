@@ -3,6 +3,7 @@
 define('ARGUMENT_SIZE', 6); //Argument Size
 define('DATA_FILE_PATH', 'data/users.csv');
 define('COLUMN_NUMBERS', 3);
+define('BULK_INSERT_SIZE', 5);
 
 //Database Credentials
 define('DB_HOST', '127.0.0.1');

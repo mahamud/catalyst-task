@@ -121,6 +121,48 @@ function createDatabaseTable(DatabaseConnectionInterface $db){
 }
 
 
+
+/**
+ * * This is a hard coded method as well. Definitely not best practice
+ *
+ * @param DatabaseConnectionInterface $db
+ * @param $data
+ * @throws Exception
+ */
+function addDataToDatabase(DatabaseConnectionInterface $db, $data){
+    try {
+        $counter = 0;
+        $sql = '';
+        foreach ($data as $key => $value) {
+            $counter++;
+            $sql .= "INSERT INTO users (name, surname, email) VALUES ('" . pg_escape_string(($value['name'])) . "', '" . pg_escape_string(($value['surname'])) . "', '"
+                . pg_escape_string($value['email']) . "');";
+            if ($counter >= BULK_INSERT_SIZE) {
+                $db->execute($sql);
+                $counter = 0;
+                $sql = '';
+            }
+        }
+        $db->execute($sql);
+    }
+    catch(Exception $exception){
+        throw new Exception($exception->getMessage());
+    }
+}
+
+
+/**
+ * @param $data
+ * @param $column
+ * @return mixed
+ */
+function removeDuplicateValuesFromArray($data, $column){
+    $tempArray = array_unique(array_column($data, $column)); //Cleaning duplicate records based on email address
+    $data = array_intersect_key($data, $tempArray);
+    return $data;
+}
+
+
 /**
  * Method that Ends the Script
  */

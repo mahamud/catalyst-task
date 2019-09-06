@@ -5,6 +5,7 @@ interface DatabaseConnectionInterface
     public function connect(array $parameters);
     public function execute($sql);
     public function getRows($sql);
+    public function getConnection();
 }
 
 /**
@@ -15,6 +16,7 @@ class MySqlConnection implements DatabaseConnectionInterface {
     public function connect(array $parameters) {}
     public function execute($sql) {}
     public function getRows($sql){}
+    public function getConnection(){}
 }
 
 
@@ -47,6 +49,13 @@ class PgSqlConnection implements DatabaseConnectionInterface {
         }
     }
 
+
+    /**
+     * @return mixed
+     */
+    public function getConnection(){
+        return $this->_connection;
+    }
 
     /**
      * @param $sql

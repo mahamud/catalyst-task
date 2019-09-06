@@ -15,7 +15,6 @@ $data = processDataFile(); //Initiate data file parsing
 $data['clean'] = removeDuplicateValuesFromArray($data['clean'], 'email');
 
 $databaseParameters = getDatabaseParameters($arguments);
-var_dump(print_r($databaseParameters, true));
 
 //Get the DB Handler
 $db = getDatabaseConnection(new PgSqlConnection());
@@ -50,6 +49,7 @@ catch(Exception $exception){
     echo $exception->getMessage().PHP_EOL;
     endScript();
 }
+
 // End the Execution here if not stopped before.
 endScript();
 

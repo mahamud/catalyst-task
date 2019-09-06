@@ -2,6 +2,7 @@
 
 require_once ('config/config.php');
 require_once ('app/helper.php');
+require_once ('app/parser.php');
 require_once ('lib/database.php');
 
 echo 'Starting the Catalyst Task ... please wait ...'.PHP_EOL;

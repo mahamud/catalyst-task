@@ -34,7 +34,10 @@ class PgSqlConnection implements DatabaseConnectionInterface {
         try {
             $connString = "host=".$parameters['host']." port=".$parameters['port']." 
             dbname=".$parameters['dbname']." user=".$parameters['user']." password=".$parameters['password'];
-            $this->_connection = pg_connect($connString);
+            $this->_connection = @pg_connect($connString);
+            if(empty($this->_connection)){
+                throw new Exception('Failed to connect to database. Incorrect credentials.');
+            }
         }
         catch(Exception $exception){
             throw new Exception($exception->getMessage());

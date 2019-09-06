@@ -10,7 +10,7 @@ sleep(2);
 
 $arguments = processArguments($argv);
 validateArguments($arguments);
-
+var_dump($arguments);
 $data = processDataFile(); //Initiate data file parsing
 $data['clean'] = removeDuplicateValuesFromArray($data['clean'], 'email');
 
@@ -43,7 +43,16 @@ if(doesTableExist($db, 'users') == false){
 
 //Create the SQL for the clean data obtained. The system will be doing bulk insert rather than row by row.
 try {
-    addDataToDatabase($db, $data['clean']);
+    $dryRun = false;
+    if(!empty($arguments['dry_run']) && $arguments['dry_run'] == true){
+        $dryRun = true;
+    }
+    if($dryRun == false) {
+        addDataToDatabase($db, $data['clean']);
+    }else{
+        echo "Records to be inserted : ".print_r($data['clean'], true).PHP_EOL;
+        echo "This was a Dry Run. No record was inserted";
+    }
 }
 catch(Exception $exception){
     echo $exception->getMessage().PHP_EOL;

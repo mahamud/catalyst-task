@@ -89,6 +89,39 @@ function displayErrorMessage($message, $endScript = false){
 
 
 /**
+ * @param DatabaseConnectionInterface $db
+ * @param $tableName
+ * @return bool
+ */
+function doesTableExist(DatabaseConnectionInterface $db, $tableName){
+    $tableName = filter_var($tableName, FILTER_SANITIZE_STRIPPED);
+    try {
+        $sql = "SELECT * FROM information_schema.tables WHERE table_schema = 'public' AND table_name  = '" . $tableName . "'";
+        $result = $db->execute($sql);
+    }
+    catch(Exception $exception){
+        return false;
+    }
+    return $result > 0 ? true : false;
+}
+
+
+/**
+ * Not a good method. Hard coded due to time constraint.
+ *
+ * @param DatabaseConnectionInterface $db
+ */
+function createDatabaseTable(DatabaseConnectionInterface $db){
+    //Drop Table First
+    $db->execute(DROP_TABLE_SQL);
+    //Create the table
+    $db->execute(TABLE_CREATION_SQL);
+    //Create Index
+    $db->execute(TABLE_INDEX_CREATION);
+}
+
+
+/**
  * Method that Ends the Script
  */
 function endScript(){

@@ -14,7 +14,9 @@ $arguments = processArguments($argv);
 var_dump(print_r($arguments, true));
 validateArguments($arguments);
 
-processDataFile(); //Initiate data file parsing
+$data = processDataFile(); //Initiate data file parsing
+
+var_dump(print_r($data, true));
 
 $databaseParameters = getDatabaseParameters($arguments);
 var_dump(print_r($databaseParameters, true));
@@ -29,6 +31,22 @@ try {
 catch(Exception $exception){
     echo $exception->getMessage().PHP_EOL;
 }
+
+if(!empty($arguments['create_table'])){ //If this option passed from commandline
+    createDatabaseTable($db);
+    echo 'Table "Users" created. Please run script with other options to execute further tasks.'.PHP_EOL;
+    endScript();
+}
+
+//var_dump($db->execute(DROP_TABLE_SQL));
+if(doesTableExist($db, 'users') == false){
+    echo 'Table "Users" does not exist. Execute script with --create_table option.'.PHP_EOL;
+    endScript();
+}
+
+//Create the SQL for the clean data obtained. The system will be doing bulk insert rather than row by row.
+
+
 
 // End the Execution here if not stopped before.
 endScript();

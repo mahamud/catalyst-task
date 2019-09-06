@@ -4,6 +4,7 @@ interface DatabaseConnectionInterface
 {
     public function connect(array $parameters);
     public function execute($sql);
+    public function getRows($sql);
 }
 
 /**
@@ -13,6 +14,7 @@ class MySqlConnection implements DatabaseConnectionInterface {
     //Implementation for a MySQL DB
     public function connect(array $parameters) {}
     public function execute($sql) {}
+    public function getRows($sql){}
 }
 
 
@@ -24,6 +26,7 @@ class PgSqlConnection implements DatabaseConnectionInterface {
     private $_connection;
     public  $lastID;  //Last insert id
     public  $affectedRows; //Affected rows
+    public  $numRows; // Number of Rows
 
 
     /**
@@ -61,15 +64,38 @@ class PgSqlConnection implements DatabaseConnectionInterface {
         return $this->lastID;
     }
 
+
+    // SELECT Query
+    // Returns an array of row objects
+    // Gets number of rows
+    public function getRows($sql)
+    {
+        $result = @pg_query($this->_connection, $sql);
+        if (pg_last_error()) exit(pg_last_error());
+        $this->numRows = pg_num_rows($result);
+        $rows = array();
+        while ($item = pg_fetch_object($result)) {
+            $rows[] = $item;
+        }
+        return $rows;
+    }
+
+
     /**
      * @param $sql
      * @return int
+     * @throws Exception
      */
     public function execute($sql)
     {
-        $result = pg_query($this->_connection, $sql);
-        if (pg_last_error()) exit(pg_last_error());
-        $this->affectedRows = pg_affected_rows($result);
-        return $this->affectedRows;
+        try {
+            $result = @pg_query($this->_connection, $sql);
+            if (pg_last_error()) exit(pg_last_error());
+            $this->affectedRows = pg_affected_rows($result);
+            return $this->affectedRows;
+        }
+        catch(Exception $exception){
+            throw new Exception($exception->getMessage());
+        }
     }
 }

@@ -15,8 +15,8 @@ function processDataFile(){
             }
 
             //Sanitize the Record now
-            $record[] = array('data_type' => 'string', 'capitalized' => true, 'value' => $data[0], 'key' => 'first_name');
-            $record[] = array('data_type' => 'string', 'capitalized' => true, 'value' => $data[1], 'key' => 'last_name');
+            $record[] = array('data_type' => 'string', 'capitalized' => true, 'value' => $data[0], 'key' => 'name');
+            $record[] = array('data_type' => 'string', 'capitalized' => true, 'value' => $data[1], 'key' => 'surname');
             $record[] = array('data_type' => 'email', 'value' => $data[2], 'key' => 'email');
             $record = sanitizeAndCleanRecord($record);
 

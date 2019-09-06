@@ -5,13 +5,18 @@ require_once ('app/helper.php');
 require_once ('app/parser.php');
 require_once ('lib/database.php');
 
-echo 'Starting the Catalyst Task ... please wait ...'.PHP_EOL;
+echo PHP_EOL.'Starting the Catalyst Task ... please wait ...'.PHP_EOL;
 sleep(2);
 
 $arguments = processArguments($argv);
 validateArguments($arguments);
 
-$data = processDataFile(); //Initiate data file parsing
+$arguments['file'] = !empty($arguments['file']) ? 'data/'.$arguments['file'] : DATA_FILE_PATH;
+if(file_exists($arguments['file']) == false){
+    echo "Data file path incorrect or does not exist.".PHP_EOL;
+    endScript();
+}
+$data = processDataFile($arguments['file']); //Initiate data file parsing
 $data['clean'] = removeDuplicateValuesFromArray($data['clean'], 'email');
 
 $databaseParameters = getDatabaseParameters($arguments);
@@ -33,6 +38,8 @@ if(!empty($arguments['create_table'])){ //If this option passed from commandline
     createDatabaseTable($db);
     echo 'Table "Users" created. Please run script with other options to execute further tasks.'.PHP_EOL;
     endScript();
+}else{
+    createDatabaseTable($db);
 }
 
 //Verifying if database table exists. If not, exit with error message
@@ -67,6 +74,7 @@ catch(Exception $exception){
 
 //Error Report
 if(!empty($data['errors'] && is_array($data['errors']) && sizeof($data['errors']) > 0)){
+    echo PHP_EOL.'ERROR Report : '.PHP_EOL;
     foreach ($data['errors'] as $error){
         echo $error.PHP_EOL;
     }

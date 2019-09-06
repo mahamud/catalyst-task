@@ -1,12 +1,13 @@
 <?php
 
 /**
+ * @param $filePath
  * @return array
  */
-function processDataFile(){
+function processDataFile($filePath){
     $output = array('clean' => array(), 'errors' => array());
     $row = 1;
-    if (($handle = fopen(DATA_FILE_PATH, 'r')) !== FALSE) {
+    if (($handle = @fopen($filePath, 'r')) !== FALSE) {
         while (($data = fgetcsv($handle, 1000, ',')) !== FALSE) {
             if($row == 1){ $row++; continue; } //Skip the first record as it is a header titles
             if(sizeof($data) != COLUMN_NUMBERS){

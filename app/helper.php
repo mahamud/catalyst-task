@@ -164,6 +164,6 @@ function removeDuplicateValuesFromArray($data, $column){
  * Method that Ends the Script
  */
 function endScript(){
-    echo PHP_EOL.'Thanks for running the script.'.PHP_EOL;
+    echo PHP_EOL.'Thanks for running the script.'.PHP_EOL.PHP_EOL;
     exit;
 }

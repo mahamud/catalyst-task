@@ -13,16 +13,25 @@ function processDataFile(){
                 $output['errors'][] = 'Record number '.$row.' has invalid column numbers.';
                 $row++; continue;
             }
+
+            //Validate the Record now
+            $record = sanitizeRecord($data);
+            $output['clean'][] = $record;
             $row++;
         }
         fclose($handle);
     }
+    var_dump(print_r($output, true));
 }
 
 
 /**
- * @param $data
+ * @param $record
+ * @return mixed
  */
-function validateRecord($data){
-
+function sanitizeRecord($record){
+    $record[0] = ucfirst(strtolower(filter_var($record[0], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)));
+    $record[1] = ucfirst(strtolower(filter_var($record[1], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)));
+    $record[2] = strtolower(filter_var($record[2], FILTER_SANITIZE_EMAIL));
+    return $record;
 }

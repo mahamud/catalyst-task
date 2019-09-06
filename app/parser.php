@@ -15,12 +15,13 @@ function processDataFile(){
             }
 
             //Sanitize the Record now
-            $record[] = array('data_type' => 'string', 'capitalized' => true, 'value' => $data[0]);
-            $record[] = array('data_type' => 'string', 'capitalized' => true, 'value' => $data[1]);
-            $record[] = array('data_type' => 'email', 'value' => $data[2]);
+            $record[] = array('data_type' => 'string', 'capitalized' => true, 'value' => $data[0], 'key' => 'first_name');
+            $record[] = array('data_type' => 'string', 'capitalized' => true, 'value' => $data[1], 'key' => 'last_name');
+            $record[] = array('data_type' => 'email', 'value' => $data[2], 'key' => 'email');
             $record = sanitizeAndCleanRecord($record);
 
             //Validate for Business Rules
+
 
             $output['clean'][] = $record;
             $row++;
@@ -42,10 +43,10 @@ function sanitizeAndCleanRecord($record){
             switch ($value['data_type']) {
                 case 'string':
                     $cleanValue = strtolower(filter_var($value['value'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES));
-                    $sanitizedRecord[] = !empty($value['capitalized'] && $value['capitalized'] == true) ? ucfirst($cleanValue) : $cleanValue;
+                    $sanitizedRecord[$value['key']] = !empty($value['capitalized'] && $value['capitalized'] == true) ? ucfirst($cleanValue) : $cleanValue;
                     break;
                 case 'email':
-                    $sanitizedRecord[] = strtolower(filter_var($value['value'], FILTER_SANITIZE_EMAIL));
+                    $sanitizedRecord[$value['key']] = strtolower(filter_var($value['value'], FILTER_SANITIZE_EMAIL));
                     break;
             }
         }

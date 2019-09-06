@@ -116,8 +116,6 @@ function createDatabaseTable(DatabaseConnectionInterface $db){
     $db->execute(DROP_TABLE_SQL);
     //Create the table
     $db->execute(TABLE_CREATION_SQL);
-    //Create Index
-    $db->execute(TABLE_INDEX_CREATION);
 }
 
 

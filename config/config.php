@@ -10,6 +10,6 @@ define('DB_NAME', 'demo');
 define('DB_PORT', '5432');
 
 //Valid argument keys
-const ARGUMENTKEYS = array('file','create_table','dry_run', 'u', 'p', 'h');
+const ARGUMENT_KEYS = array('file','create_table','dry_run', 'u', 'p', 'h');
 
 

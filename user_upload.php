@@ -14,13 +14,17 @@ var_dump(print_r($arguments, true));
 validateArguments($arguments);
 $databaseParameters = getDatabaseParameters($arguments);
 var_dump(print_r($databaseParameters, true));
+
+//Get the DB Handler
 $db = getDatabaseConnection(new PgSqlConnection());
-/*try {
-    $db->connect();
+
+//Connect to Database
+try {
+    $db->connect($databaseParameters);
 }
 catch(Exception $exception){
     echo $exception->getMessage().PHP_EOL;
-}*/
+}
 
 // End the Execution here if not stopped before.
 endScript();

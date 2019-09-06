@@ -49,7 +49,7 @@ function validateArguments($arguments){
         }else{
             //Get all argument keys
             $argumentArrayKeys = array_keys($arguments);
-            $result = array_diff($argumentArrayKeys, ARGUMENTKEYS); //Validate against valid argument keys
+            $result = array_diff($argumentArrayKeys, ARGUMENT_KEYS); //Validate against valid argument keys
             if(is_array($result) == false || sizeof($result) > 0){
                 displayErrorMessage("Error: Invalid argument key passed. Execute php user_upload --help for details.", true);
             }

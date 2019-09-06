@@ -29,7 +29,7 @@ catch(Exception $exception){
 }
 
 //Validation based on options passed from command line
-if(!empty($arguments['create_table'])){ //If this option passed from commandline
+if(!empty($arguments['create_table'])){ //If this option passed from commandline, only the table will be created and the script will stop here
     createDatabaseTable($db);
     echo 'Table "Users" created. Please run script with other options to execute further tasks.'.PHP_EOL;
     endScript();
@@ -48,7 +48,13 @@ try {
         $dryRun = true;
     }
     if($dryRun == false) {
-        addDataToDatabase($db, $data['clean']);
+        try {
+            addDataToDatabase($db, $data['clean']);
+        }
+        catch(Exception $exception){
+            echo $exception->getMessage().PHP_EOL;
+            endScript();
+        }
     }else{
         echo "Records to be inserted : ".print_r($data['clean'], true).PHP_EOL;
         echo "This was a Dry Run. No record was inserted";
@@ -57,6 +63,14 @@ try {
 catch(Exception $exception){
     echo $exception->getMessage().PHP_EOL;
     endScript();
+}
+
+//Error Report
+if(!empty($data['errors'] && is_array($data['errors']) && sizeof($data['errors']) > 0)){
+    foreach ($data['errors'] as $error){
+        echo $error.PHP_EOL;
+    }
+    echo PHP_EOL;
 }
 
 // End the Execution here if not stopped before.

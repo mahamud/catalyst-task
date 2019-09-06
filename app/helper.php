@@ -119,7 +119,6 @@ function createDatabaseTable(DatabaseConnectionInterface $db){
 }
 
 
-
 /**
  * * This is a hard coded method as well. Definitely not best practice
  *

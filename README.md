@@ -20,10 +20,15 @@ This command will try to use the data file passed within the option. Please note
 
 `php user_upload.php --create_table`
 
-This command will create the table snd stop the execution of the script once that is done.
+This command will create the table and stop the execution of the script once that is done.
 
+`php user_upload.php --file=users.csv --dry_run`
 
+This command will execute and perform all operations except inserting into the database.
 
+`php user_upload.php --file=users.csv --create_table --dry_run -u=username -p=password -h=host`
 
-#Note
+This command will pick the host name, database user name and database password from the options passed and bypass the default ones.
+
+# Note
 1

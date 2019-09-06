@@ -30,15 +30,17 @@ try {
 }
 catch(Exception $exception){
     echo $exception->getMessage().PHP_EOL;
+    endScript();
 }
 
+//Validation based on options passed from command line
 if(!empty($arguments['create_table'])){ //If this option passed from commandline
     createDatabaseTable($db);
     echo 'Table "Users" created. Please run script with other options to execute further tasks.'.PHP_EOL;
     endScript();
 }
 
-//var_dump($db->execute(DROP_TABLE_SQL));
+//Verifying if database table exists. If not, exit with error message
 if(doesTableExist($db, 'users') == false){
     echo 'Table "Users" does not exist. Execute script with --create_table option.'.PHP_EOL;
     endScript();

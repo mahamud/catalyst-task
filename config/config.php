@@ -14,7 +14,7 @@ define('DB_NAME', 'demo');
 define('DB_PORT', '5432');
 
 //Valid argument keys
-const ARGUMENT_KEYS = array('file','create_table','dry_run', 'u', 'p', 'h');
+const ARGUMENT_KEYS = array('file','create_table','dry_run', 'u', 'p', 'h', 'help');
 
 //Due to time constraint, this part is hard coded. Otherwise, would have written script to dynamically create a table
 const TABLE_CREATION_SQL = "CREATE TABLE users(

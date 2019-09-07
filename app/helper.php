@@ -149,6 +149,22 @@ function addDataToDatabase(DatabaseConnectionInterface $db, $data){
 
 
 /**
+ * @return string
+ */
+function displayHelpDocumentation(){
+   $output = PHP_EOL.'Usage: user_upload [options...] <url>'.PHP_EOL;
+   $output .= '--file [csv file name] – this is the name of the CSV to be parsed'.PHP_EOL;
+   $output .= '--create_table – this will cause the PostgreSQL users table to be built (and no further action will be taken)'.PHP_EOL;
+   $output .= '--dry_run – this will be used with the --file directive in case we want to run the script but not insert into the DB. All other functions will be executed, but the database won\'t be altered'.PHP_EOL;
+   $output .= '-u – PostgreSQL username'.PHP_EOL;
+   $output .= '-p – PostgreSQL password'.PHP_EOL;
+   $output .= '-h – PostgreSQL host'.PHP_EOL;
+   $output.= PHP_EOL;
+   return $output;
+}
+
+
+/**
  * @param $data
  * @param $column
  * @return mixed

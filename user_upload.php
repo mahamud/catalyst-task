@@ -10,6 +10,17 @@ sleep(2);
 
 $arguments = processArguments($argv);
 validateArguments($arguments);
+reset($arguments);
+$first_key = key($arguments);
+if($first_key == 'help'){
+    echo displayHelpDocumentation();
+}elseif(in_array('help', $arguments) == true && $first_key != 'help'){
+    echo PHP_EOL."user_upload: try 'php user_upload --help' for more information.".PHP_EOL;
+    endScript();
+}
+
+
+//Check if --help option is passed
 
 $arguments['file'] = !empty($arguments['file']) ? 'data/'.$arguments['file'] : DATA_FILE_PATH;
 if(file_exists($arguments['file']) == false){

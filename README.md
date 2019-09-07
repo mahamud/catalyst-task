@@ -2,7 +2,7 @@
 PHP script that parses a csv file and insert data to a PostgreSQL Database
 
 
-# Ideal Environment
+# Environment
 The ideal environment to execute the script
 1. Ubuntu 18.04
 2. PHP Version - 7.2.x
@@ -29,6 +29,3 @@ This command will execute and perform all operations except inserting into the d
 `php user_upload.php --file=users.csv --create_table --dry_run -u=username -p=password -h=host`
 
 This command will pick the host name, database user name and database password from the options passed and bypass the default ones.
-
-# Note
-1

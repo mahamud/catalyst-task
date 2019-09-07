@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Interface DatabaseConnectionInterface
+ */
 interface DatabaseConnectionInterface
 {
     public function connect(array $parameters);
@@ -26,7 +29,6 @@ class MySqlConnection implements DatabaseConnectionInterface {
 class PgSqlConnection implements DatabaseConnectionInterface {
 
     private $_connection;
-    public  $lastID;  //Last insert id
     public  $affectedRows; //Affected rows
     public  $numRows; // Number of Rows
 

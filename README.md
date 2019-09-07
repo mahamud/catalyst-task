@@ -29,3 +29,7 @@ This command will execute and perform all operations except inserting into the d
 `php user_upload.php --file=users.csv --create_table --dry_run -u=username -p=password -h=host`
 
 This command will pick the host name, database user name and database password from the options passed and bypass the default ones.
+
+`php user_upload.php --help`
+
+This command will output the above list of directives with details.

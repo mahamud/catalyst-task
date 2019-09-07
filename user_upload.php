@@ -10,6 +10,9 @@ sleep(2);
 
 $arguments = processArguments($argv);
 validateArguments($arguments);
+
+//Check if --help option is passed
+//Functionality for --help command line option
 reset($arguments);
 $first_key = key($arguments);
 if($first_key == 'help'){
@@ -21,8 +24,7 @@ if($first_key == 'help'){
 }
 
 
-//Check if --help option is passed
-
+//Data processing section
 $arguments['file'] = !empty($arguments['file']) ? 'data/'.$arguments['file'] : DATA_FILE_PATH;
 if(file_exists($arguments['file']) == false){
     echo "Data file path incorrect or does not exist.".PHP_EOL;
@@ -31,11 +33,11 @@ if(file_exists($arguments['file']) == false){
 $data = processDataFile($arguments['file']); //Initiate data file parsing
 $data['clean'] = removeDuplicateValuesFromArray($data['clean'], 'email');
 
-$databaseParameters = getDatabaseParameters($arguments);
 
+//Database connectivity section
+$databaseParameters = getDatabaseParameters($arguments);
 //Get the DB Handler
 $db = getDatabaseConnection(new PgSqlConnection());
-
 //Connect to Database
 try {
     $db->connect($databaseParameters);
@@ -44,6 +46,7 @@ catch(Exception $exception){
     echo $exception->getMessage().PHP_EOL;
     endScript();
 }
+
 
 //Validation based on options passed from command line
 if(!empty($arguments['create_table'])){ //If this option passed from commandline, only the table will be created and the script will stop here

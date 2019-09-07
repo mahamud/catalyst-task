@@ -6,6 +6,7 @@ define('COLUMN_NUMBERS', 3);
 define('BULK_INSERT_SIZE', 5);
 
 //Database Credentials
+//Ideally would be stored as environment variables within the web server or within Parameter store in AWS.
 define('DB_HOST', '127.0.0.1');
 define('DB_USER', 'postgres');
 define('DB_PASS', 'test123');

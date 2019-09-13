@@ -18,11 +18,10 @@ $first_key = key($arguments);
 if($first_key == 'help'){
     echo displayHelpDocumentation();
     endScript();
-}elseif(in_array('help', $arguments) == true && $first_key != 'help'){
+}elseif(in_array('help', array_keys($arguments)) == true && $first_key != 'help'){
     echo PHP_EOL."user_upload: try 'php user_upload --help' for more information.".PHP_EOL;
     endScript();
 }
-
 
 //Data processing section
 $arguments['file'] = !empty($arguments['file']) ? 'data/'.$arguments['file'] : DATA_FILE_PATH;
